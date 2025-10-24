@@ -307,17 +307,48 @@
   <section class="section" id="BibTeX">
     <div class="container is-max-desktop content">
       <h2 class="title">BibTeX</h2>
-      <pre><code>@inproceedings{Lyu2024ResGSRD,
-        title={ResGS: Residual Densification of 3D Gaussian for Efficient Detail Recovery},
-        author={Yanzhe Lyu and Kai Cheng and Xin Kang and Xuejin Chen},
-        year={2024},
-        eprint={2412.07494},
-        archivePrefix={arXiv},
-        primaryClass={cs.CV}
-      }</code></pre>
+      <div class="buttons" style="margin-bottom:8px">
+        <button id="copy-bibtex" class="button is-small is-dark">
+          <span class="icon"><i class="fas fa-copy"></i></span>
+          <span>Copy BibTeX</span>
+        </button>
+      </div>
+      <pre><code id="bibtex-code">@inproceedings{lyu2025resgs,
+  title={ResGS: Residual Densification of 3D Gaussian for Efficient Detail Recovery},
+  author={Lyu, Yanzhe and Cheng, Kai and Kang, Xin and Chen, Xuejin},
+  booktitle={Proceedings of the IEEE/CVF International Conference on Computer Vision},
+  pages={28093--28102},
+  year={2025}
+}</code></pre>
     </div>
 </section>
 <!--End BibTex citation -->
+
+<script>
+  (function() {
+    var btn = document.getElementById('copy-bibtex');
+    if (!btn) return;
+    var original = btn.innerHTML;
+    btn.addEventListener('click', function() {
+      var text = document.getElementById('bibtex-code')?.innerText || '';
+      function showCopied(ok) {
+        btn.innerHTML = ok ? '<span class="icon"><i class="fas fa-check"></i></span><span>Copied!</span>' : '<span class="icon"><i class="fas fa-exclamation-triangle"></i></span><span>Failed</span>';
+        setTimeout(function() { btn.innerHTML = original; }, 1500);
+      }
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(function(){showCopied(true);}).catch(function(){showCopied(false);});
+      } else {
+        // Fallback for older browsers
+        var ta = document.createElement('textarea');
+        ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+        document.body.appendChild(ta); ta.focus(); ta.select();
+        try { var ok = document.execCommand('copy'); showCopied(ok); }
+        catch(e){ showCopied(false); }
+        document.body.removeChild(ta);
+      }
+    });
+  })();
+  </script>
 
 
   <footer class="footer">
